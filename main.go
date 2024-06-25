@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
+
+	"github.com/bariiss/getir/internal"
 )
 
 func main() {
 	// Define the URL
-	var url = "http://ip-api.com/json"
+	url := "http://ip-api.com/json"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -46,23 +47,8 @@ func main() {
 	jsonString := string(prettyJSON)
 
 	// Color and bold the JSON keys
-	coloredJSON := colorizeJSON(jsonString)
+	coloredJSON := internal.ColorizeJSON(jsonString)
 
 	// Print the beautified and colored JSON
 	fmt.Println(coloredJSON)
-}
-
-func colorizeJSON(jsonString string) string {
-	lines := strings.Split(jsonString, "\n")
-	for i, line := range lines {
-		if strings.Contains(line, ":") {
-			parts := strings.Split(line, ":")
-			key := parts[0]
-			value := strings.Join(parts[1:], ":")
-			// Apply color and bold to the key
-			coloredKey := fmt.Sprintf("\033[1;34m%s\033[0m", key)
-			lines[i] = coloredKey + ":" + value
-		}
-	}
-	return strings.Join(lines, "\n")
 }
