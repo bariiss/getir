@@ -1,3 +1,3 @@
-module github.com/bariiss/getip
+module github.com/bariiss/getir
 
 go 1.22.4
